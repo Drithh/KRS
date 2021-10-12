@@ -2,30 +2,29 @@
 #include <array>
 
 
-class MataKuliah {
-    DataMataKuliah m_dataMK;
+class MataKuliah : private DataMataKuliah {
     bool m_lulus;
 
 
   public:
     MataKuliah(){};
-    MataKuliah(DataMataKuliah dataMK) : m_dataMK(dataMK){};
+    MataKuliah(DataMataKuliah dataMK) : DataMataKuliah(dataMK){};
 
 
     char *getNama() {
-        return m_dataMK.nama;
+        return m_nama;
     }
     int getSks() {
-        return m_dataMK.sks;
+        return m_sks;
     }
     int getKuota() {
-        return m_dataMK.kuota;
+        return m_kuota;
     }
     int getJenis() {
-        return m_dataMK.jenis;
+        return m_jenis;
     }
     std::array<int, 5> getPrasyarat() {
-        return m_dataMK.prasyarat;
+        return m_prasyarat;
     }
     void setLulus(bool lulus) {
         m_lulus = lulus;

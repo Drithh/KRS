@@ -4,20 +4,25 @@
 using namespace std;
 
 namespace filehandler {
-void appendFile(pair<int, DataMataKuliah> dataMK) {
+void appendFile(pair<int, DataMataKuliah> &dataMK) {
     FILE *file;
     file = fopen("datamatkul.dat", "a");
     if (file == NULL) {
         cout << "File Tidak Ditemukan\n";
         return;
     }
-    fprintf(file, "(%d, %s, %d, %d, %d, ", dataMK.first, dataMK.second.nama,
-            dataMK.second.sks, dataMK.second.kuota, dataMK.second.jenis);
-    for (auto i : dataMK.second.prasyarat) {
+    fprintf(file, "(%d, %s, %d, %d, %d, ", dataMK.first, dataMK.second.m_nama,
+            dataMK.second.m_sks, dataMK.second.m_kuota, dataMK.second.m_jenis);
+    for (auto i : dataMK.second.m_prasyarat) {
+        fprintf(file, "%d|", i);
+    }
+    fprintf(file, ", ");
+    for (auto i : dataMK.second.m_jadwal) {
         fprintf(file, "%d|", i);
     }
     fprintf(file, ")\n");
 }
+
 void readFile(unordered_map<int, MataKuliah> &MK) {
     FILE *file;
     file = fopen("datamatkul.dat", "r");
@@ -25,20 +30,22 @@ void readFile(unordered_map<int, MataKuliah> &MK) {
         cout << "File Tidak Ditemukan\n";
         return;
     }
-    int kodeMK;
-    DataMataKuliah temp;
 
-    fscanf(file, "(%d, %[^,], %d, %d, %d,", &kodeMK, temp.nama, &temp.sks,
-           &temp.kuota, &temp.jenis);
-    for (int i = 0; i < 5; i++) {
-        fscanf(file, "%d|", &temp.prasyarat[i]);
+    fseek(file, 0, SEEK_END);
+    const long size = ftell(file);
+    fseek(file, 0, SEEK_SET);
+
+    while (ftell(file) < size) {
+        int kodeMK;
+        DataMataKuliah temp;
+
+        fscanf(file, "(%d, %[^,], %d, %d, %d,", &kodeMK, temp.m_nama,
+               &temp.m_sks, &temp.m_kuota, &temp.m_jenis);
+        for (int i = 0; i < 5; i++) {
+            fscanf(file, "%d|", &temp.m_prasyarat[i]);
+        }
+        MK[kodeMK] = temp;
+        fseek(file, 2, SEEK_CUR);
     }
-
-    MK[kodeMK] = temp;
 }
 } // namespace filehandler
-
-
-// char temp[50];
-// fgets(temp, 50, file);
-// cout << ftell(file) << endl;
