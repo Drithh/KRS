@@ -1,13 +1,15 @@
+#pragma once
 #include "DataMataKuliah.h"
+#include "Tool.h"
 #include <vector>
 
 
-class MataKuliah : DataMataKuliah {
-    bool m_lulus;
+class Course : DataMataKuliah {
+    bool m_lulus = false;
 
   public:
-    MataKuliah(){};
-    MataKuliah(DataMataKuliah dataMK) : DataMataKuliah(dataMK){};
+    Course(){};
+    Course(DataMataKuliah dataMK) : DataMataKuliah(dataMK){};
 
     int getKode() const {
         return m_kode;
@@ -26,7 +28,7 @@ class MataKuliah : DataMataKuliah {
     std::string getJenis() const {
         return Tool::jenisTeks[m_jenis - 1];
     }
-    std::vector<int> getPrasyarat() const {
+    std::vector<int> getPrasyarat() {
         return m_prasyarat;
     }
     std::vector<std::pair<int, int>> getJadwal() const {
@@ -37,5 +39,17 @@ class MataKuliah : DataMataKuliah {
     }
     bool getLulus() {
         return m_lulus;
+    }
+
+    void printMataKuliah() {
+        if (m_lulus) {
+            return;
+        }
+        cout << "Kode Mata Kuliah: " << m_kode << "\nNama Mata Kuliah: " << m_nama
+             << "\nJumlah SKS: " << m_sks << "\nJenis: " << m_jenis << endl;
+        cout << "Jadwalnya :" << endl;
+        for (auto jadwal : m_jadwal) {
+            cout << "\t" << Tool::convertTimeToString(jadwal) << endl;
+        }
     }
 };
