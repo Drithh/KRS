@@ -26,7 +26,7 @@ class Siakad {
     void printMataKuliah(MataKuliah &course) {
         cout << "Kode Mata Kuliah: " << course.getKode()
              << "\nNama Mata Kuliah: " << course.getNama() << "\nJumlah SKS: " << course.getSks()
-             << "\nJenis: " << Tool::m_jenisTeks[course.getJenis()] << endl;
+             << "\nJenis: " << course.getJenis() << endl;
         cout << (course.getPrasyarat().empty() ? "Prasyarat Tidak Ada" : "Prasyarat :") << endl;
         for (int kodePrasyarat : course.getPrasyarat()) {
             auto prasyarat = searchMataKuliah(kodePrasyarat);
@@ -34,16 +34,21 @@ class Siakad {
                 cout << "\t" << prasyarat->getNama() << endl;
             }
         }
+        cout << "Jadwalnya :" << endl;
+        for (auto jadwal : course.getJadwal()) {
+            cout << "\t" << Tool::convertTimeToString(jadwal) << endl;
+        }
+        cout << "\n\n";
     }
 };
 
 Siakad::Siakad() {
     courses.push_back((DataMataKuliah){
-        1, "Konsep Pemrograman", 4, 20, 0, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
+        1, "Konsep Pemrograman", 4, 20, 1, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
     courses.push_back(
-        (DataMataKuliah){2, "Kalkulus 1", 3, 25, 0, {}, {{1, 900}, {3, 600}, {5, 420}}});
+        (DataMataKuliah){2, "Kalkulus 1", 3, 25, 1, {}, {{1, 900}, {3, 600}, {5, 420}}});
     courses.push_back(
-        (DataMataKuliah){3, "Sistem Digital", 4, 20, 4, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
+        (DataMataKuliah){3, "Sistem Digital", 4, 20, 2, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
     courses.push_back((DataMataKuliah){
-        1, "Konsep Pemrograman", 4, 20, 4, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
+        1, "Konsep Pemrograman", 4, 20, 2, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
 }

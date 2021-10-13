@@ -2,24 +2,29 @@
 #include <string>
 #include <utility>
 #pragma once
+using namespace std;
 
 struct DataMataKuliah {
     int m_kode;
-    std::string m_nama;
+    string m_nama;
     int m_sks;
     int m_kuota;
     int m_jenis;
-    std::vector<int> m_prasyarat;
-    std::vector<std::pair<int, int>> m_jadwal;
+    vector<int> m_prasyarat;
+    vector<pair<int, int>> m_jadwal;
 };
 
+
 namespace Tool {
-char m_jenisTeks[2][10] = {"Wajib", "Minat"};
-// std::string convertTimeToString(int time) {
-// }
-// int convertStringToTime(std::string time) {
-// }
+string jenisTeks[2] = {"Wajib", "Minat"};
+string hari[7] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 
-
+string convertTimeToString(pair<int, int> time) {
+    string hours = to_string(time.second / 60);
+    string minutes = to_string(time.second % 60);
+    return hari[time.first] + string(8 - hari[time.first].length(), ' ') + " " +
+           string(2 - hours.length(), '0') + hours + ":" + string(2 - minutes.length(), '0') +
+           minutes;
+}
 
 } // namespace Tool

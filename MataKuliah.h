@@ -23,8 +23,8 @@ class MataKuliah : DataMataKuliah {
     int getKuota() const {
         return m_kuota;
     }
-    int getJenis() const {
-        return m_jenis;
+    std::string getJenis() const {
+        return Tool::jenisTeks[m_jenis - 1];
     }
     std::vector<int> getPrasyarat() const {
         return m_prasyarat;
