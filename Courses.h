@@ -8,7 +8,7 @@ using namespace std;
 class Courses {
 
   protected:
-    vector<Course> courses;
+    static vector<Course> courses;
 
   public:
     Courses();
@@ -25,15 +25,13 @@ class Courses {
     }
 };
 
+vector<Course> Courses::courses;
+
 Courses::Courses() {
     if (courses.empty()) {
-        courses.push_back((DataMataKuliah){
-            1, "Konsep Pemrograman", 4, 20, 1, {}, {{1, 100}, {3, 600}, {5, 420}}});
-        courses.push_back(
-            (DataMataKuliah){2, "Kalkulus 1", 3, 25, 1, {}, {{1, 900}, {3, 600}, {5, 420}}});
-        courses.push_back((DataMataKuliah){
-            3, "Sistem Digital", 4, 20, 2, {1, 2}, {{1, 900}, {3, 600}, {5, 420}}});
-        courses.push_back(
-            (DataMataKuliah){4, "Kalkulus 2", 4, 20, 2, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
+        courses.push_back({"Konsep Pemrograman", 4, 20, 1, {}, {{1, 100}, {3, 600}, {5, 420}}});
+        courses.push_back({"Kalkulus 1", 3, 25, 1, {}, {{1, 900}, {3, 600}, {5, 420}}});
+        courses.push_back({"Sistem Digital", 4, 20, 2, {1, 2}, {{1, 900}, {3, 600}, {5, 420}}});
+        courses.push_back({"Kalkulus 2", 4, 20, 2, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
     }
 }

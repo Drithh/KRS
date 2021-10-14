@@ -1,15 +1,40 @@
 #pragma once
-#include "DataMataKuliah.h"
+// #include "DataMataKuliah.h"
 #include "Tool.h"
 #include <vector>
 
 using namespace std;
-class Course : DataMataKuliah {
+class Course {
     bool m_lulus = false;
+    int m_kode;
+    string m_nama;
+    int m_sks;
+    int m_kuota;
+    int m_jenis;
+    vector<int> m_prasyarat;
+    vector<pair<int, int>> m_jadwal;
+    static int orderKode;
 
   public:
     Course(){};
-    Course(DataMataKuliah dataMK) : DataMataKuliah(dataMK){};
+    /**
+     * @brief Construct Course object
+     *
+     * @param kode - kode mata kuliah otomatis tergenerate dari orderKode
+     * @param nama - nama mata kuliah
+     * @param sks - jumlah SKS
+     * @param kuota - kuota kelas
+     * @param jenis - Jenis mata kuliah (wajib/pilihan)
+     * @param prasyarat - prasyarat, berisi vector dari kode mata kuliah
+     * @param jadwal - jadwal, vector pair, dengan pair.first = harinys dan pair.seecond = waktu
+     * dengan menit
+     */
+    Course(string nama, int sks, int kuota, int jenis, vector<int> prasyarat,
+           vector<pair<int, int>> jadwal)
+        : m_nama(nama), m_sks(sks), m_kuota(kuota), m_jenis(jenis), m_prasyarat(prasyarat),
+          m_jadwal(jadwal) {
+        m_kode = orderKode++;
+    };
 
     int getKode() const {
         return m_kode;
@@ -50,10 +75,7 @@ class Course : DataMataKuliah {
         return m_lulus;
     }
 
-    void printMataKuliah() {
-        if (m_lulus) {
-            return;
-        }
+    void printCourse() {
         cout << "Kode Mata Kuliah: " << m_kode << "\nNama Mata Kuliah: " << m_nama
              << "\nJumlah SKS: " << m_sks << "\nJenis: " << m_jenis << "\nKuota: " << m_kuota
              << endl;
@@ -65,3 +87,8 @@ class Course : DataMataKuliah {
         }
     }
 };
+
+int Course::orderKode = 0;
+
+
+// 3 Jadwal tapi cuma 1 kuota

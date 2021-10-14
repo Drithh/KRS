@@ -2,9 +2,9 @@
 #include <vector>
 #include <string>
 #include <utility>
-#include "KRS.h"
+#include "Siakad.h"
 using namespace std;
-class Mahasiswa : public KRS {
+class Mahasiswa : public Siakad {
 
 
   public:
