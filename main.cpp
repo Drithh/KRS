@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string.h>
 #include "Mahasiswa.h"
 using namespace std;
 
@@ -117,7 +116,7 @@ void casePrasyarat() {
     cin.get();
 
 
-    mahasiswa1.setLulus(1, 1); // Lulus MK kode 1 (Konpro)
+    mahasiswa1.setLulus(1, true); // Lulus MK kode 1 (Konpro)
     cin.get();
     mahasiswa1.printKRS(); // Melihat KRS sudah kosong
     cin.get();
@@ -125,7 +124,7 @@ void casePrasyarat() {
 
     mahasiswa1.addKRS(5, 2); // Mengambil SD dan Algo di kelas 2
     cin.get();
-    mahasiswa1.setLulus(5, 1); // Lulus MK kode 5 (SD dan Algo)
+    mahasiswa1.setLulus(5, true); // Lulus MK kode 5 (SD dan Algo)
     cin.get();
 
 
@@ -137,7 +136,7 @@ void casePrasyarat() {
 
     mahasiswa1.printKRS();
     cin.get();
-    mahasiswa1.setLulus(8, 1);
+    mahasiswa1.setLulus(8, true);
     cin.get();
 
     mahasiswa1.printCourseHistory();

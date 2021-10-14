@@ -9,7 +9,7 @@ namespace Tool {
 string jenisTeks[2] = {"Wajib", "Pilihan"};
 string hari[7] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 
-string convertTimeToString(pair<int, int> time) {
+auto convertTimeToString(pair<int, int> time) -> string {
     string hours = to_string(time.second / 60);
     string minutes = to_string(time.second % 60);
     return hari[time.first] + string(8 - hari[time.first].length(), ' ') + " " +

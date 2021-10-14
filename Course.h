@@ -1,6 +1,7 @@
 #pragma once
 // #include "DataMataKuliah.h"
 #include "Tool.h"
+#include <utility>
 #include <vector>
 #include "Kelas.h"
 using namespace std;
@@ -18,7 +19,8 @@ class Course {
     static int orderKode;
 
   public:
-    Course(){};
+    Course() = default;
+    ;
     /**
      * @brief Construct Course object
      *
@@ -32,28 +34,29 @@ class Course {
      * jadwal berisi pair, jadwal.first = hari, jadwal.second = waktu dalam menit
      */
     Course(string nama, int sks, int jenis, vector<int> prasyarat, vector<Kelas> kelas)
-        : m_nama(nama), m_sks(sks), m_jenis(jenis), m_prasyarat(prasyarat), m_kelas(kelas) {
+        : m_nama(std::move(nama)), m_sks(sks), m_jenis(jenis), m_prasyarat(std::move(prasyarat)),
+          m_kelas(std::move(kelas)) {
         m_kode = orderKode++;
     };
 
-    int getKode() const {
+    auto getKode() const -> int {
         return m_kode;
     }
 
-    string getNama() const {
+    auto getNama() const -> string {
         return m_nama;
     }
 
-    int getSks() const {
+    auto getSks() const -> int {
         return m_sks;
     }
     void kelasTerambil(int nomorKelas) {
         m_kelas[nomorKelas - 1].m_kuota--;
     }
-    string getJenis() const {
+    auto getJenis() const -> string {
         return Tool::jenisTeks[m_jenis - 1];
     }
-    vector<int> getPrasyarat() {
+    auto getPrasyarat() -> vector<int> {
         return m_prasyarat;
     }
     void setJadwal(vector<Kelas> newKelas) {
@@ -62,11 +65,11 @@ class Course {
     }
 
 
-    vector<Kelas> getKelas() const {
+    auto getKelas() const -> vector<Kelas> {
         return m_kelas;
     }
 
-    bool getLulus() const {
+    auto getLulus() const -> bool {
         return m_lulus;
     }
 

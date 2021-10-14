@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 #include <vector>
 #include <string>
 #include <utility>
@@ -9,7 +10,7 @@ class Mahasiswa : public Siakad {
     string m_nim;
 
   public:
-    Mahasiswa(string nama, string nim) : m_nama(nama), m_nim(nim){};
+    Mahasiswa(string nama, string nim) : m_nama(move(nama)), m_nim(move(nim)){};
 
 
     void printKRS() {

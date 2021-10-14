@@ -13,16 +13,16 @@ class KRS {
     int sksMaksimal = 8;
 
   public:
-    bool searchCourseHistory(int kodeCourse) {
+    auto searchCourseHistory(int kodeCourse) -> bool {
         return find(courseHistory.begin(), courseHistory.end(), kodeCourse) != courseHistory.end();
     }
 
-    vector<Course>::iterator searchKRS(int kodeCourse) {
+    auto searchKRS(int kodeCourse) -> vector<Course>::iterator {
         return find_if(krs.begin(), krs.end(),
                        [kodeCourse](const Course &c) -> bool { return kodeCourse == c.getKode(); });
     }
 
-    vector<Course>::iterator searchKRS(string namaCourse) {
+    auto searchKRS(string namaCourse) -> vector<Course>::iterator {
         return find_if(krs.begin(), krs.end(),
                        [namaCourse](const Course c) -> bool { return namaCourse == c.getNama(); });
     }

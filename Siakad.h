@@ -8,9 +8,9 @@
 using namespace std;
 
 class Siakad : public Courses, public KRS {
-    bool checkKuota(Course &course, int pilihKelas);
-    bool checkPrasyarat(Course &course);
-    bool checkJadwalTubrukan(Course &course, Kelas &pilihJadwal);
+    static auto checkKuota(Course &course, int pilihKelas) -> bool;
+    auto checkPrasyarat(Course &course) -> bool;
+    auto checkJadwalTubrukan(Course &course, Kelas &pilihKelas) -> bool;
     void printCourse(Course &course);
 
   public:
@@ -101,15 +101,14 @@ class Siakad : public Courses, public KRS {
  * @return true - kuota masih ada
  * @return false  - kuota sudah habis
  */
-bool Siakad::checkKuota(Course &course, int pilihKelas) {
+auto Siakad::checkKuota(Course &course, int pilihKelas) -> bool {
     if (course.getKelas().at(pilihKelas - 1).m_kuota > 0) {
         return true;
     }
-    else {
-        cout << "Gagal Mengambil Kelas " << course.getNama() << endl;
-        cout << "Kelas " << course.getNama() << " Sudah Penuh" << endl;
-        return false;
-    }
+
+    cout << "Gagal Mengambil Kelas " << course.getNama() << endl;
+    cout << "Kelas " << course.getNama() << " Sudah Penuh" << endl;
+    return false;
 }
 
 /**
@@ -119,7 +118,7 @@ bool Siakad::checkKuota(Course &course, int pilihKelas) {
  * @return true - Prasyarat terpenuhi
  * @return false - Prasyarat tidak terpenuhi
  */
-bool Siakad::checkPrasyarat(Course &course) {
+auto Siakad::checkPrasyarat(Course &course) -> bool {
     for (int prasyarat : course.getPrasyarat()) {
         if (!searchCourseHistory(prasyarat)) {
             cout << "Gagal Mengambil Kelas " << course.getNama() << endl;
@@ -138,7 +137,7 @@ bool Siakad::checkPrasyarat(Course &course) {
  * @return true - ketika tidak ada tubrukan
  * @return false - ketika terjadi tubrukan
  */
-bool Siakad::checkJadwalTubrukan(Course &course, Kelas &pilihKelas) {
+auto Siakad::checkJadwalTubrukan(Course &course, Kelas &pilihKelas) -> bool {
     // Menghitung Durasi Pelajaran
     const int menitPerSKS = 50;
     const int durasiPelajaran = course.getSks() * menitPerSKS;

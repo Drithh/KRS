@@ -13,13 +13,13 @@ class Courses {
   public:
     Courses();
 
-    vector<Course>::iterator searchCourses(int kodeCourse) {
+    static auto searchCourses(int kodeCourse) -> vector<Course>::iterator {
         return find_if(courses.begin(), courses.end(),
                        [kodeCourse](const Course &c) -> bool { return kodeCourse == c.getKode(); });
     }
 
 
-    vector<Course>::iterator searchCourses(string namaCourse) {
+    static auto searchCourses(string namaCourse) -> vector<Course>::iterator {
         return find_if(courses.begin(), courses.end(),
                        [namaCourse](const Course c) -> bool { return namaCourse == c.getNama(); });
     }
