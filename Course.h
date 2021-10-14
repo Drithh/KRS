@@ -2,17 +2,20 @@
 // #include "DataMataKuliah.h"
 #include "Tool.h"
 #include <vector>
-
+#include "Kelas.h"
 using namespace std;
+
+
+
 class Course {
     bool m_lulus = false;
     int m_kode;
     string m_nama;
     int m_sks;
-    int m_kuota;
+    // int m_kuota;
     int m_jenis;
     vector<int> m_prasyarat;
-    vector<pair<int, int>> m_jadwal;
+    vector<Kelas> m_kelas;
     static int orderKode;
 
   public:
@@ -26,13 +29,11 @@ class Course {
      * @param kuota - kuota kelas
      * @param jenis - Jenis mata kuliah (wajib/pilihan)
      * @param prasyarat - prasyarat, berisi vector dari kode mata kuliah
-     * @param jadwal - jadwal, vector pair, dengan pair.first = harinys dan pair.seecond = waktu
-     * dengan menit
+     * @param kelas - kelas, struct berisi nama dosen, kuota, jadwal
+     * jadwal berisi pair, jadwal.first = hari, jadwal.second = waktu dalam menit
      */
-    Course(string nama, int sks, int kuota, int jenis, vector<int> prasyarat,
-           vector<pair<int, int>> jadwal)
-        : m_nama(nama), m_sks(sks), m_kuota(kuota), m_jenis(jenis), m_prasyarat(prasyarat),
-          m_jadwal(jadwal) {
+    Course(string nama, int sks, int jenis, vector<int> prasyarat, vector<Kelas> kelas)
+        : m_nama(nama), m_sks(sks), m_jenis(jenis), m_prasyarat(prasyarat), m_kelas(kelas) {
         m_kode = orderKode++;
     };
 
@@ -47,11 +48,8 @@ class Course {
     int getSks() const {
         return m_sks;
     }
-    void kelasTerambil() {
-        m_kuota--;
-    }
-    int getKuota() const {
-        return m_kuota;
+    void kelasTerambil(int nomorKelas) {
+        m_kelas[nomorKelas - 1].m_kuota--;
     }
     string getJenis() const {
         return Tool::jenisTeks[m_jenis - 1];
@@ -59,17 +57,16 @@ class Course {
     vector<int> getPrasyarat() {
         return m_prasyarat;
     }
-    void setJadwal(vector<pair<int, int>> newJadwal) {
-        m_jadwal.clear();
-        m_jadwal = newJadwal;
+    void setJadwal(vector<Kelas> newKelas) {
+        m_kelas.clear();
+        m_kelas = newKelas;
     }
 
 
-    vector<pair<int, int>> getJadwal() const {
-        return m_jadwal;
+    vector<Kelas> getKelas() const {
+        return m_kelas;
     }
     void setLulus(bool lulus) {
-        m_lulus = lulus;
     }
     bool getLulus() const {
         return m_lulus;
@@ -77,18 +74,16 @@ class Course {
 
     void printCourse() {
         cout << "Kode Mata Kuliah: " << m_kode << "\nNama Mata Kuliah: " << m_nama
-             << "\nJumlah SKS: " << m_sks << "\nJenis: " << m_jenis << "\nKuota: " << m_kuota
-             << endl;
+             << "\nJumlah SKS: " << m_sks << "\nJenis: " << getJenis() << endl;
         cout << "Jadwalnya :" << endl;
 
         int i = 1;
-        for (pair<int, int> jadwal : m_jadwal) {
-            cout << "\t" << i++ << ". " << Tool::convertTimeToString(jadwal) << endl;
+        for (Kelas &kelas : m_kelas) {
+            cout << "\t" << i++ << ". " << kelas.pengampu
+                 << " Waktu:" << Tool::convertTimeToString(kelas.m_jadwal) << " - Kuota:" << kelas.m_kuota
+                 << endl;
         }
     }
 };
 
-int Course::orderKode = 0;
-
-
-// 3 Jadwal tapi cuma 1 kuota
+int Course::orderKode = 1;
