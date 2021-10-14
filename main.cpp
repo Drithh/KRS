@@ -3,16 +3,50 @@
 #include "Mahasiswa.h"
 using namespace std;
 
-void casePrasyarat();
-void caseKuota();
+void caseSKSMaksimal();
 void caseTubrukan();
+void caseKuota();
+void casePrasyarat();
 
 int main() {
-    // casePrasyarat();
+    // caseSKSMaksimal();
+    // caseTubrukan();
     // caseKuota();
-    caseTubrukan();
+    // casePrasyarat();
+}
+/**
+ * @brief Kasus saat sks sudah melewati batas maksimal (SKS maksimal = 8)
+ *
+ */
+void caseSKSMaksimal() {
+    Mahasiswa mahasiswa1("Mahasiwa1", "M05200012");
+
+    mahasiswa1.searchCourse("Konsep Pemrograman"); // Mencari matkul konsep pemrograman
+    cin.get();
+    mahasiswa1.addKRS(1, 1); // Mengambil matkul konsep pemrograman kelas 1 (SKS = 4)
+    cin.get();
+
+
+    mahasiswa1.searchCourse("Kalkulus 1"); // Mencari matkul Kalkulus 1
+    cin.get();
+    mahasiswa1.addKRS(2, 2); // Mengambil matkul Kalkulus 1 kelas 2 agar tidak tubrukan (SKS = 3)
+    cin.get();
+    mahasiswa1.printKRS(); // Mencetak KRS
+    cin.get();
+
+
+    mahasiswa1.searchCourse("Sistem Digital"); // Mencari matkul Sistem Digital
+    cin.get();
+    mahasiswa1.addKRS(3, 2); // Gagal menambahkan ke krs karena sudah melewati batas sks (SKS = 4)
+    cin.get();
+    mahasiswa1.printKRS(); // Mencetak KRS
+    cin.get();
 }
 
+/**
+ * @brief Kasus saat terjadi tubrukan pada mata kuliah yang ingin diambil
+ *
+ */
 void caseTubrukan() {
     Mahasiswa mahasiswa1("Mahasiwa1", "M05200012");
     mahasiswa1.searchCourse("Konsep Pemrograman"); // Mencari matkul konsep pemrograman
@@ -30,7 +64,10 @@ void caseTubrukan() {
     cin.get();
 }
 
-
+/**
+ * @brief Kasus ketika kuota di kelas (bukan mata kuliah) sudah habis
+ *
+ */
 void caseKuota() {
     Mahasiswa mahasiswa1("Mahasiwa1", "M05200012");
     mahasiswa1.printCourses(); // mahasiswa1 mencetak semua course yang bisa diambil olehnya
@@ -55,10 +92,17 @@ void caseKuota() {
     mahasiswa3.printKRS(); // krs kosong
 }
 
+/**
+ * @brief Kasus ketika  ada prasyarat yang belum dituntaskan
+ *
+ */
 void casePrasyarat() {
     Mahasiswa mahasiswa1("Mahasiwa1", "M05200012");
-    mahasiswa1.searchCourse("DAA"); // Mempunyai prasyarat SD dan Algo
+    mahasiswa1.searchCourse("DAA"); // Mempunyai prasyarat SD dan Algo dam Konsep Pemrograman
     cin.get();
+    mahasiswa1.addKRS(8, 2); // Mencoba mengambil  DAA di kelas ke 2 tapi gagal
+
+
     mahasiswa1.searchCourse("SD dan Algo"); // Mempunyai prasyarat Konsep Pemrograman
     cin.get();
     mahasiswa1.addKRS(5, 2); // Mencoba mengambil  SD dan Algo di kelas ke 2 tapi gagal
@@ -81,11 +125,11 @@ void casePrasyarat() {
 
     mahasiswa1.addKRS(5, 2); // Mengambil SD dan Algo di kelas 2
     cin.get();
-    mahasiswa1.setLulus(5, 1);
+    mahasiswa1.setLulus(5, 1); // Lulus MK kode 5 (SD dan Algo)
     cin.get();
 
 
-    mahasiswa1.searchCourse("DAA");
+    mahasiswa1.searchCourse("DAA"); // Mencari DAA, Prasyaratnya sudah hilang
     cin.get();
     mahasiswa1.addKRS(8, 2); // Mengambil kelas DAA
     cin.get();

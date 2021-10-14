@@ -65,8 +65,7 @@ class Course {
     vector<Kelas> getKelas() const {
         return m_kelas;
     }
-    void setLulus(bool lulus) {
-    }
+
     bool getLulus() const {
         return m_lulus;
     }

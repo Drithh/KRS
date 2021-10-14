@@ -40,7 +40,8 @@ Courses::Courses() {
             {"SD dan Algo", 4, 1, {1}, {{"Pa Wiranto", 10, {4, 480}}, {"Pa Wiranto", 10, {5, 480}}}});
         courses.push_back({"Kalkulus 2", 3, 1, {2}, {{"Bu Umi", 10, {5, 700}}, {"Bu Umi", 10, {2, 720}}}});
         courses.push_back({"PBO", 4, 1, {5}, {{"Pa Ardhi", 10, {2, 720}}, {"Pa Bambang", 10, {1, 540}}}});
-        courses.push_back({"DAA", 4, 1, {5}, {{"Pa Wiranto", 10, {1, 600}}, {"Pa Wiranto", 10, {5, 480}}}});
+        courses.push_back(
+            {"DAA", 4, 1, {1, 5}, {{"Pa Wiranto", 10, {1, 600}}, {"Pa Wiranto", 10, {5, 480}}}});
         courses.push_back({"Kalkulus 2", 3, 1, {6}, {{"Bu Umi", 10, {3, 480}}, {"Bu Umi", 10, {5, 720}}}});
         courses.push_back(
             {"Kriptografi", 4, 2, {4}, {{"Pa Bambang", 10, {3, 780}}, {"Pa Bambang", 10, {5, 900}}}});

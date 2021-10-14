@@ -48,16 +48,16 @@ class KRS {
      */
     void setLulus(int kodeCourse, bool lulus) {
         auto courseLulus = searchKRS(kodeCourse);
+        auto namaCourse = courseLulus->getNama();
         if (courseLulus != krs.end()) {
             sksMaksimal += courseLulus->getSks();
             krs.erase(courseLulus);
             if (lulus) {
-                cout << "Selamat Kamu Lulus Matkul " << courseLulus->getNama() << endl;
+                cout << "Selamat Kamu Lulus Matkul " << namaCourse << endl;
                 courseHistory.push_back(kodeCourse);
-                courseLulus.base()->setLulus(true);
             }
             else {
-                cout << "Kamu Tidak Lulus Matkul " << courseLulus->getNama() << endl;
+                cout << "Kamu Tidak Lulus Matkul " << namaCourse << endl;
             }
         }
     }

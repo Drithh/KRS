@@ -142,11 +142,10 @@ bool Siakad::checkJadwalTubrukan(Course &course, Kelas &pilihKelas) {
     // Menghitung Durasi Pelajaran
     const int menitPerSKS = 50;
     const int durasiPelajaran = course.getSks() * menitPerSKS;
-    cout << "asdasdas" << krs.size() << endl;
     for (Course courseTerambil : krs) {
         auto kelasTerambil = courseTerambil.getKelas().at(0);
-        if (kelasTerambil.m_jadwal.first < pilihKelas.m_jadwal.first) {
-            cout << "ashdasdoasdsaidjasiodoasdoasj" << endl;
+
+        if (kelasTerambil.m_jadwal.first == pilihKelas.m_jadwal.first) {
             // Check apakah Jam mulai Kelas yang dipilih ada diantara jam kelas yang sudah ada di KRS
             if ((kelasTerambil.m_jadwal.second < pilihKelas.m_jadwal.second &&
                  kelasTerambil.m_jadwal.second + durasiPelajaran > pilihKelas.m_jadwal.second)) {
