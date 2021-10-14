@@ -3,7 +3,7 @@
 #include "Tool.h"
 #include <vector>
 
-
+using namespace std;
 class Course : DataMataKuliah {
     bool m_lulus = false;
 
@@ -15,29 +15,38 @@ class Course : DataMataKuliah {
         return m_kode;
     }
 
-    std::string getNama() const {
+    string getNama() const {
         return m_nama;
     }
 
     int getSks() const {
         return m_sks;
     }
+    void kelasTerambil() {
+        m_kuota--;
+    }
     int getKuota() const {
         return m_kuota;
     }
-    std::string getJenis() const {
+    string getJenis() const {
         return Tool::jenisTeks[m_jenis - 1];
     }
-    std::vector<int> getPrasyarat() {
+    vector<int> getPrasyarat() {
         return m_prasyarat;
     }
-    std::vector<std::pair<int, int>> getJadwal() const {
+    void setJadwal(vector<pair<int, int>> newJadwal) {
+        m_jadwal.clear();
+        m_jadwal = newJadwal;
+    }
+
+
+    vector<pair<int, int>> getJadwal() const {
         return m_jadwal;
     }
     void setLulus(bool lulus) {
         m_lulus = lulus;
     }
-    bool getLulus() {
+    bool getLulus() const {
         return m_lulus;
     }
 
@@ -46,10 +55,13 @@ class Course : DataMataKuliah {
             return;
         }
         cout << "Kode Mata Kuliah: " << m_kode << "\nNama Mata Kuliah: " << m_nama
-             << "\nJumlah SKS: " << m_sks << "\nJenis: " << m_jenis << endl;
+             << "\nJumlah SKS: " << m_sks << "\nJenis: " << m_jenis << "\nKuota: " << m_kuota
+             << endl;
         cout << "Jadwalnya :" << endl;
-        for (auto jadwal : m_jadwal) {
-            cout << "\t" << Tool::convertTimeToString(jadwal) << endl;
+
+        int i = 1;
+        for (pair<int, int> jadwal : m_jadwal) {
+            cout << "\t" << i++ << ". " << Tool::convertTimeToString(jadwal) << endl;
         }
     }
 };

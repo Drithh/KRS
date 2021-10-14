@@ -6,7 +6,7 @@
 using namespace std;
 
 namespace Tool {
-string jenisTeks[2] = {"Wajib", "Minat"};
+string jenisTeks[2] = {"Wajib", "Pilihan"};
 string hari[7] = {"Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"};
 
 string convertTimeToString(pair<int, int> time) {

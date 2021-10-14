@@ -4,38 +4,36 @@
 #include <vector>
 #include <utility>
 using namespace std;
+
 class Siakad : Courses {
 
   public:
-    Siakad();
-
     void displayMataKuliah() {
         for (auto course : courses) {
             printMataKuliah(course);
         }
     }
 
+    template <class T> void searchMataKuliah(T mataKuliah) {
+        printMataKuliah(*Courses::searchMataKuliah(mataKuliah));
+    }
+
     void printMataKuliah(Course &course) {
         course.printMataKuliah();
         cout << (course.getPrasyarat().empty() ? "Prasyarat Tidak Ada" : "Prasyarat :") << endl;
         for (int kodePrasyarat : course.getPrasyarat()) {
-            auto prasyarat = searchMataKuliah(kodePrasyarat);
+            auto prasyarat = Courses::searchMataKuliah(kodePrasyarat);
             if (!prasyarat->getLulus()) {
                 cout << "\t" << prasyarat->getNama() << endl;
             }
         }
         cout << "\n\n";
     }
+
+
+
+    pair<Course &, pair<int, int>> confirmMataKuliah(int kodeMK, int jadwalDipilih) {
+        Course &MK = *Courses::searchMataKuliah(kodeMK);
+        return {MK, MK.getJadwal().at(jadwalDipilih - 1)};
+    }
 };
-
-
-Siakad::Siakad() {
-    courses.push_back((DataMataKuliah){
-        1, "Konsep Pemrograman", 4, 20, 1, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
-    courses.push_back(
-        (DataMataKuliah){2, "Kalkulus 1", 3, 25, 1, {}, {{1, 900}, {3, 600}, {5, 420}}});
-    courses.push_back(
-        (DataMataKuliah){4, "Kalkulus 2", 4, 20, 2, {3, 2}, {{1, 900}, {3, 600}, {5, 420}}});
-    courses.push_back(
-        (DataMataKuliah){3, "Sistem Digital", 4, 20, 2, {1, 2}, {{1, 900}, {3, 600}, {5, 420}}});
-}
