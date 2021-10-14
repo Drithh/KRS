@@ -12,7 +12,6 @@ class Course {
     int m_kode;
     string m_nama;
     int m_sks;
-    // int m_kuota;
     int m_jenis;
     vector<int> m_prasyarat;
     vector<Kelas> m_kelas;

@@ -10,7 +10,7 @@ class KRS {
   protected:
     vector<Course> krs;
     vector<int> courseHistory;
-    int sksMaksimal;
+    int sksMaksimal = 8;
 
   public:
     bool searchCourseHistory(int kodeCourse) {
@@ -26,6 +26,8 @@ class KRS {
         return find_if(krs.begin(), krs.end(),
                        [namaCourse](const Course c) -> bool { return namaCourse == c.getNama(); });
     }
+
+
 
     void printKRS() {
         if (krs.empty()) {
@@ -47,10 +49,15 @@ class KRS {
     void setLulus(int kodeCourse, bool lulus) {
         auto courseLulus = searchKRS(kodeCourse);
         if (courseLulus != krs.end()) {
+            sksMaksimal += courseLulus->getSks();
             krs.erase(courseLulus);
             if (lulus) {
+                cout << "Selamat Kamu Lulus Matkul " << courseLulus->getNama() << endl;
                 courseHistory.push_back(kodeCourse);
                 courseLulus.base()->setLulus(true);
+            }
+            else {
+                cout << "Kamu Tidak Lulus Matkul " << courseLulus->getNama() << endl;
             }
         }
     }

@@ -11,6 +11,7 @@ class Siakad : public Courses, public KRS {
     bool checkKuota(Course &course, int pilihKelas);
     bool checkPrasyarat(Course &course);
     bool checkJadwalTubrukan(Course &course, Kelas &pilihJadwal);
+    void printCourse(Course &course);
 
   public:
     /**
@@ -18,64 +19,77 @@ class Siakad : public Courses, public KRS {
      *
      */
     void printCourses() {
+        cout << "\n==========ALL COURSE==========" << endl;
         for (Course course : courses) {
             printCourse(course);
         }
+        cout << "\n==========ALL COURSE=========="
+             << "\n\n\n";
     }
 
-    /**
-     * @brief Mencetak isi dari course, jika course sudah lulus maka tidak mencetak
-     *
-     * @param course Object course
-     */
-    void printCourse(Course &course) {
-        int kodeCourse = course.getKode();
-        if (!searchCourseHistory(kodeCourse)) {
-            course.printCourse();
-            cout << (course.getPrasyarat().empty() ? "Prasyarat Tidak Ada" : "Prasyarat :") << endl;
-            for (int kodePrasyarat : course.getPrasyarat()) {
-                auto prasyarat = Courses::searchCourses(kodePrasyarat);
-                if (!prasyarat->getLulus()) {
-                    cout << "\t" << prasyarat->getNama() << endl;
-                }
-            }
-        }
-
-        cout << "\n\n";
-    }
     /**
      * @brief cari matakuliah dengan nama atau kodenya
      *
      * @tparam T string atau int
      * @param course
      */
-    template <class T> void searchCourses(T course) {
+    template <class T> void searchCourse(T course) {
+        cout << "\n============SEARCH COURSE============" << endl;
         printCourse(*Courses::searchCourses(course));
+        cout << "============SEARCH COURSE============"
+             << "\n\n\n";
     }
 
     /**
      * @brief Tambah Mata Kuliah ke KRS, Digunakan saat mahasiswa memilih mata kuliah yang ingin
-     * diambil
+     * diambil.
      * @param kodeCourse integer, kode dari mata kuliah
      * @param pilihKelas, integer jadwal yang dipilih
      *
      *
      */
     void addKRS(int kodeCourse, int pilihKelas) {
+
         Course &course = *Courses::searchCourses(kodeCourse);
+        if (course.getKelas().size() < pilihKelas) {
+            cout << "Kelas yang kamu pilih tidak ada" << endl;
+            return;
+        }
         Kelas kelas = course.getKelas().at(pilihKelas - 1);
 
+
+        // Check apakah kuota habis, prayarat tidak terpenuhi, jadwal tubrukan, sudah lulus, sudahdiambil
         if (!checkKuota(course, pilihKelas) || !checkPrasyarat(course) ||
             !checkJadwalTubrukan(course, kelas) || searchCourseHistory(kodeCourse) ||
             searchKRS(kodeCourse) != krs.end()) {
             return;
         }
+
+        // Check apakah mahasiswa mengambil sks kelebihan
+        int currentSKS = sksMaksimal - course.getSks();
+        if (currentSKS < 0) {
+            cout << "Kamu mengambil terlalu banyak kelas" << endl;
+            return;
+        }
+
         cout << "Kelas " << course.getNama() << " Berhasil Diambil" << endl;
         course.kelasTerambil(pilihKelas);
-
+        sksMaksimal = currentSKS;
         Course courseDiambil = course;
         courseDiambil.setJadwal({kelas});
         krs.push_back(courseDiambil);
+    }
+
+    void printCourseHistory() {
+        if (courseHistory.empty()) {
+            cout << "Kamu belum pernah lulus apa-apa" << endl;
+        }
+        else {
+            for (auto kodeCourse : courseHistory) {
+                auto course = *Courses::searchCourses(kodeCourse);
+                cout << "Nama:" << course.getNama() << " SKS:" << course.getSks() << endl;
+            }
+        }
     }
 };
 
@@ -125,24 +139,38 @@ bool Siakad::checkPrasyarat(Course &course) {
  * @return false - ketika terjadi tubrukan
  */
 bool Siakad::checkJadwalTubrukan(Course &course, Kelas &pilihKelas) {
-    for (Course course : courses) {
-        if (course.getKode() != course.getKode()) {
-            // Menghitung Durasi Pelajaran
-            const int menitPerSKS = 50;
-            const int durasiPelajaran = course.getSks() * menitPerSKS;
-            for (Kelas kelas : course.getKelas()) {
-                // Check apakah harinya sama
-                if (kelas.m_jadwal.first == pilihKelas.m_jadwal.first) {
-                    // Check apakah Jam mulai Kelas yang dipilih ada diantara jam kelas yang sudah ada di KRS
-                    if ((kelas.m_jadwal.second < pilihKelas.m_jadwal.second &&
-                         kelas.m_jadwal.second + durasiPelajaran > pilihKelas.m_jadwal.second)) {
-                        cout << "Gagal Mengambil Kelas " << course.getNama() << endl;
-                        cout << "Ada Tubrukan Dengan Kelas " << course.getNama() << endl;
-                        return false;
-                    }
-                }
+    // Menghitung Durasi Pelajaran
+    const int menitPerSKS = 50;
+    const int durasiPelajaran = course.getSks() * menitPerSKS;
+    cout << "asdasdas" << krs.size() << endl;
+    for (Course courseTerambil : krs) {
+        auto kelasTerambil = courseTerambil.getKelas().at(0);
+        if (kelasTerambil.m_jadwal.first < pilihKelas.m_jadwal.first) {
+            cout << "ashdasdoasdsaidjasiodoasdoasj" << endl;
+            // Check apakah Jam mulai Kelas yang dipilih ada diantara jam kelas yang sudah ada di KRS
+            if ((kelasTerambil.m_jadwal.second < pilihKelas.m_jadwal.second &&
+                 kelasTerambil.m_jadwal.second + durasiPelajaran > pilihKelas.m_jadwal.second)) {
+                cout << "Gagal Mengambil Kelas " << course.getNama() << endl;
+                cout << "Ada Tubrukan Dengan Kelas " << course.getNama() << endl;
+                return false;
             }
         }
     }
     return true;
+}
+
+void Siakad::printCourse(Course &course) {
+    int kodeCourse = course.getKode();
+    if (!searchCourseHistory(kodeCourse)) {
+        course.printCourse();
+        cout << (course.getPrasyarat().empty() ? "Prasyarat Tidak Ada" : "Prasyarat :") << endl;
+        for (int kodePrasyarat : course.getPrasyarat()) {
+            auto prasyarat = Courses::searchCourses(kodePrasyarat);
+            if (!prasyarat->getLulus()) {
+                cout << "\t" << prasyarat->getNama() << endl;
+            }
+        }
+    }
+
+    cout << "\n\n";
 }
