@@ -11,7 +11,7 @@ int main() {
     // caseSKSMaksimal();
     // caseTubrukan();
     // caseKuota();
-    // casePrasyarat();
+    casePrasyarat();
 }
 /**
  * @brief Kasus saat sks sudah melewati batas maksimal (SKS maksimal = 8)
@@ -71,14 +71,14 @@ void caseKuota() {
     Mahasiswa mahasiswa1("Mahasiwa1", "M05200012");
     mahasiswa1.printCourses(); // mahasiswa1 mencetak semua course yang bisa diambil olehnya
     cin.get();
-    mahasiswa1.addKRS(2, 2); // mahasiswa1 mengambil kelas kalkulus 2 dengan kuota 2 (kelas 2)
+    mahasiswa1.addKRS(2, 2); // mahasiswa1 mengambil  kalkulus 1 kelas 2 dengan kuota 2 (kelas 2)
     cin.get();
-    mahasiswa1.printKRS(); // mahasiswa1 berhasil mengambil kalkulus 2
+    mahasiswa1.printKRS(); // mahasiswa1 berhasil mengambil kalkulus 1 kelas 2
     cin.get();
 
 
     Mahasiswa mahasiswa2("Mahasiwa2", "M05200013");
-    mahasiswa2.searchCourse("Kalkulus 1"); // mahasiswa2 mencari kalkulus1 kuota sisa 1 untuk kelas 2
+    mahasiswa2.searchCourse("Kalkulus 1"); // mahasiswa2 mencari kalkulus 1  kelas 2 kuota sisa 1
     cin.get();
     mahasiswa2.addKRS(2, 2); // berhasil menambahkan ke krs
     cin.get();

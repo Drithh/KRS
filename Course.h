@@ -33,8 +33,7 @@ class Course {
      * jadwal berisi pair, jadwal.first = hari, jadwal.second = waktu dalam menit
      */
     Course(string nama, int sks, int jenis, vector<int> prasyarat, vector<Kelas> kelas)
-        : m_nama(std::move(nama)), m_sks(sks), m_jenis(jenis), m_prasyarat(std::move(prasyarat)),
-          m_kelas(std::move(kelas)) {
+        : m_nama(move(nama)), m_sks(sks), m_jenis(jenis), m_prasyarat(move(prasyarat)), m_kelas(move(kelas)) {
         m_kode = orderKode++;
     };
 
